@@ -27,3 +27,8 @@ if you observe any problems with this tool or have questions about handling this
 ## run
 
     java -jar target/csv2scldj-0.0.1-SNAPSHOT-onejar.jar -csv-input-file-name=[FILE PATH TO YOUR CSV INPUT FILE] -ldj-output-file-name=[FILE PATH TO YOUR LINE-DELIMITED JSON OUTPUT FILE] -cell-value-delimiter=[THE CELL VALUE DELIMITER TO BE ABLE TO SPLIT UP MULTIPLE VALUES IN A CELL]
+
+or
+
+    cd bin 
+    csv2scldj -csv-input-file-name=[FILE PATH TO YOUR CSV INPUT FILE] -ldj-output-file-name=[FILE PATH TO YOUR LINE-DELIMITED JSON OUTPUT FILE] -cell-value-delimiter=[THE CELL VALUE DELIMITER TO BE ABLE TO SPLIT UP MULTIPLE VALUES IN A CELL]
