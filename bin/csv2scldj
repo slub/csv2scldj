@@ -1,0 +1,2 @@
+#!/bin/bash
+java -jar ../target/csv2scldj-0.0.1-SNAPSHOT-onejar.jar $@

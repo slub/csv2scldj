@@ -1,0 +1,305 @@
+<!--
+
+    Copyright © 2017 SLUB Dresden (<code@dswarm.org>)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>de.slubdresden</groupId>
+	<artifactId>csv2scldj</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>csv2scldj</name>
+	<url>http://slub-dresden.de</url>
+
+	<prerequisites>
+		<maven>3.0.4</maven>
+	</prerequisites>
+
+	<inceptionYear>2017</inceptionYear>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+		<version.maven-shade-plugin>3.1.0</version.maven-shade-plugin>
+		<version.maven-jar-plugin>3.0.2</version.maven-jar-plugin>
+		<version.maven.plugin.version>2.4</version.maven.plugin.version>
+		<version.maven.plugin.dependency>3.0.1</version.maven.plugin.dependency>
+		<version.maven.plugin.deploy>2.8.2</version.maven.plugin.deploy>
+		<version.maven.plugin.assembly>3.1.0</version.maven.plugin.assembly>
+		<version.maven.plugin.clean>3.0.0</version.maven.plugin.clean>
+		<version.maven.plugin.release>2.5.3</version.maven.plugin.release>
+		<version.maven.plugin.resources>3.0.2</version.maven.plugin.resources>
+		<version.maven.plugin.install>2.5.2</version.maven.plugin.install>
+		<version.maven.plugin.site>3.6</version.maven.plugin.site>
+		<version.maven.plugin.surefire>2.20</version.maven.plugin.surefire>
+		<version.maven.plugin.license>3.0</version.maven.plugin.license>
+		<version.slf4j.api>1.7.25</version.slf4j.api>
+		<version.logback>1.2.3</version.logback>
+		<junit.version>4.12</junit.version>
+		<version.commons-csv>1.5</version.commons-csv>
+		<version.vavr>0.9.1</version.vavr>
+		<jackson.version>2.9.1</jackson.version>
+		<version.jsonassert>1.5.0</version.jsonassert>
+		<google.guava.version>23.0</google.guava.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>slubnexus-snapshots</id>
+			<name>Internal Snapshots</name>
+			<url>http://nexus.slub-dresden.de:8081/nexus/content/repositories/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>slubnexus-releases</id>
+			<name>Internal Releases</name>
+			<url>http://nexus.slub-dresden.de:8081/nexus/content/repositories/releases/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>${version.commons-csv}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.vavr</groupId>
+			<artifactId>vavr</artifactId>
+			<version>${version.vavr}</version>
+		</dependency>
+
+		<!-- jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${version.slf4j.api}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${version.logback}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.skyscreamer</groupId>
+			<artifactId>jsonassert</artifactId>
+			<version>${version.jsonassert}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${google.guava.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>${version.maven-shade-plugin}</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<finalName>${project.artifactId}-${project.version}-onejar</finalName>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${version.maven-jar-plugin}</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>de.slubdresden.csv2scldj.CSV2SCLDJExecuter</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>${version.maven.plugin.assembly}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>${version.maven.plugin.deploy}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>${version.maven.plugin.clean}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>${version.maven.plugin.install}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>${version.maven.plugin.resources}</version>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>${version.maven.plugin.dependency}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>${version.maven.plugin.site}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${version.maven.plugin.surefire}</version>
+				<executions>
+					<execution>
+						<id>default-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.mycila</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>${version.maven.plugin.license}</version>
+				<configuration>
+					<header>com/mycila/maven/plugin/license/templates/APACHE-2.txt</header>
+					<properties>
+						<owner>SLUB Dresden</owner>
+						<project.inceptionYear>2017</project.inceptionYear>
+						<email>&lt;code@dswarm.org&gt;</email>
+					</properties>
+					<useDefaultExcludes>true</useDefaultExcludes>
+					<excludes>
+						<exclude>codequality/**</exclude>
+						<exclude>dev-tools/**</exclude>
+						<exclude>doc/**</exclude>
+						<exclude>log/**</exclude>
+						<exclude>logs/**</exclude>
+						<exclude>out/**</exclude>
+						<exclude>tmp/**</exclude>
+						<exclude>ui/**</exclude>
+						<exclude>web/**</exclude>
+						<exclude>**/.gitattributes</exclude>
+						<exclude>**/*.conf</exclude>
+						<exclude>**/src/test/resources/**</exclude>
+						<exclude>**/src/main/resources/**</exclude>
+						<exclude>**/src/docs/ui/**</exclude>
+						<exclude>contributors.txt</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>update-license-header</id>
+						<goals>
+							<goal>format</goal>
+						</goals>
+						<phase>process-sources</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+				<version>${version.maven.plugin.version}</version>
+			</plugin>
+		</plugins>
+	</reporting>
+
+	<distributionManagement>
+		<repository>
+			<id>deployment</id>
+			<name>Internal Releases</name>
+			<url>http://nexus.slub-dresden.de:8081/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>deployment</id>
+			<name>Internal Releases</name>
+			<url>http://nexus.slub-dresden.de:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+</project>
+
