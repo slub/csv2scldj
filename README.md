@@ -31,4 +31,6 @@ if you observe any problems with this tool or have questions about handling this
 or
 
     cd bin 
-    csv2scldj -csv-input-file-name=[FILE PATH TO YOUR CSV INPUT FILE] -ldj-output-file-name=[FILE PATH TO YOUR LINE-DELIMITED JSON OUTPUT FILE] -cell-value-delimiter=[THE CELL VALUE DELIMITER TO BE ABLE TO SPLIT UP MULTIPLE VALUES IN A CELL]
+    ./csv2scldj -csv-input-file-name=[FILE PATH TO YOUR CSV INPUT FILE] -ldj-output-file-name=[FILE PATH TO YOUR LINE-DELIMITED JSON OUTPUT FILE] -cell-value-delimiter=[THE CELL VALUE DELIMITER TO BE ABLE TO SPLIT UP MULTIPLE VALUES IN A CELL]
+
+You can set the logging root directory with help of parameter ```-logging-dir [INSERT YOUR LOGGING DIRECTORY HERE]``` at ```csv2scldj``` command (```-Dlogging_dir=[INSERT YOUR LOGGING DIRECTORY HERE]``` when calling the java library directly). The default logging root directory is the current path where the command is executed from.
