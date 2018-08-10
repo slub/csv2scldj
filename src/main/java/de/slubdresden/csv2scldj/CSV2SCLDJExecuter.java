@@ -75,6 +75,8 @@ public final class CSV2SCLDJExecuter extends AbstractExecuter {
 
 			printHelp();
 
+			System.exit(1);
+
 			return;
 		}
 
@@ -86,6 +88,8 @@ public final class CSV2SCLDJExecuter extends AbstractExecuter {
 		} catch (final Exception e) {
 
 			printHelp();
+
+			System.exit(1);
 
 			return;
 		}
@@ -142,6 +146,8 @@ public final class CSV2SCLDJExecuter extends AbstractExecuter {
 			LOG.error("something went wrong at converting CSV 2 schema conform line-delimited JSON.", e);
 
 			System.out.println("\n" + HELP);
+
+			System.exit(1);
 		}
 
 	}
