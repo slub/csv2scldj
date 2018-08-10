@@ -1,2 +1,25 @@
 #!/bin/bash
-java -jar ../target/csv2scldj-0.0.1-SNAPSHOT-onejar.jar $@
+args=$@
+csv2scldj_args=""
+logging_dir=.
+logging_dir_index=-1
+index=0
+for arg in $args
+do
+    if [ $logging_dir_index \> 0 ]
+    then
+        logging_dir=$arg
+        logging_dir_index=-2
+    else
+        if [[ $arg == -logging-dir ]]
+        then
+            logging_dir_index=$((index+1))
+        else
+            csv2scldj_args="$csv2scldj_args $arg"
+        fi
+    fi
+    index=$((index+1))
+done
+echo "logging_dir = $logging_dir"
+echo "csv2scldj_args = $csv2scldj_args"
+java -jar -Dlogging_dir=$logging_dir ../target/csv2scldj-0.0.1-SNAPSHOT-onejar.jar $csv2scldj_args
