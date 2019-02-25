@@ -30,7 +30,7 @@ public enum FincSolrSchema {
 	AUTHOR2_VARIANT("author2_variant", true),
 	AUTHOR_ADDITIONAL("author_additional", true),
 	AUTHOR_BROWSE("author_browse", true),
-	AUTHOR_CORP_REF("author_corp_ref", true),
+	AUTHOR_CORPORATE_REF("author_corporate_ref", true),
 	AUTHOR_CORPORATE("author_corporate", true),
 	AUTHOR_CORPORATE2("author_corporate2", true),
 	AUTHOR_CORPORATE2_ORIG("author_corporate2_orig", true),
@@ -45,8 +45,6 @@ public enum FincSolrSchema {
 	AUTHOR_ROLE("author_role", true),
 	AUTHOR_SORT("author_sort", null),
 	AUTHOR_VARIANT("author_variant", true),
-	AUTHORIZED_MODE("authorized_mode", false),
-	AUTHORSTR("authorStr", null),
 	BARCODE("barcode", true),
 	BRANCH_DE105("branch_de105", true),
 	BRANCH_DE14("branch_de14", true),
@@ -205,15 +203,6 @@ public enum FincSolrSchema {
 	URL("url", true),
 	URN("urn", true),
 	VERSION("_version_", null),
-	VF1_AUTHOR("vf1_author", null),
-	VF1_AUTHOR2("vf1_author2", true),
-	VF1_AUTHOR2_ORIG("vf1_author2_orig", true),
-	VF1_AUTHOR2_ROLE("vf1_author2-role", true),
-	VF1_AUTHOR_CORP("vf1_author_corp", null),
-	VF1_AUTHOR_CORP_ORIG("vf1_author_corp_orig", false),
-	VF1_AUTHOR_CORP2("vf1_author_corp2", true),
-	VF1_AUTHOR_CORP2_ORIG("vf1_author_corp2_orig", true),
-	VF1_AUTHOR_ORIG("vf1_author_orig", false),
 	ZDB("zdb", false);
 
 	private String fieldName;
