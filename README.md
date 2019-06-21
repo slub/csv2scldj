@@ -25,7 +25,7 @@ in order to be able to use this tool, you first need to define a schema file
 
 ### schema file definition
 
-the schema file is a CSV file that consists of columns, each row is a field definition
+the schema file is a CSV file that consists of rows and columns, each row is a field definition
 
 | column | column ID | Excel sheet ID | description | allowed values | required |
 |--------|-----------|----------------|-------------|----------------|----------|
