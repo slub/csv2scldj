@@ -1,12 +1,12 @@
 /**
  * Copyright © 2017 SLUB Dresden (<code@dswarm.org>)
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -36,6 +36,7 @@ import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.slubdresden.csv2scldj.model.Field;
 import de.slubdresden.csv2scldj.schema.finc.FincSolrSchema;
 
 /**
@@ -57,8 +58,6 @@ public final class CSV2SCLDJConverter {
 			.withEscape(ESCAPE_CHARACTER)
 			.withIgnoreSurroundingSpaces();
 
-	private static final String NO_ID_AVAILABLE_ATM = "[no id available atm]";
-
 	static {
 
 		final ObjectMapper objectMapper = new ObjectMapper();
@@ -72,6 +71,7 @@ public final class CSV2SCLDJConverter {
 
 
 	public static void convert(final Reader reader,
+	                           final Map<String, Field> schema,
 	                           final BufferedWriter writer,
 	                           final String cellValueDelimiter) throws IOException, CSV2SCLDJException {
 
@@ -88,7 +88,7 @@ public final class CSV2SCLDJConverter {
 
 		checkHeader(csvInputHeaderMap);
 
-		final Map<String, Boolean> fieldMap = generateFieldMap(csvInputHeaderMap.keySet());
+		final Map<String, Field> fieldMap = generateFieldMap(csvInputHeaderMap.keySet(), schema);
 
 		while (iterator.hasNext()) {
 
@@ -112,7 +112,7 @@ public final class CSV2SCLDJConverter {
 
 		sb.append("tried to write following fields (i.e. there is no guarantee that they occur in all target records):").append("\n");
 
-		for(final String field : fieldMap.keySet()) {
+		for (final String field : fieldMap.keySet()) {
 
 			sb.append("\t\t")
 					.append(field)
@@ -124,12 +124,10 @@ public final class CSV2SCLDJConverter {
 
 	private static void writeRecord(final CSVRecord csvInputRecord,
 	                                final Map<String, Integer> csvInputHeaderMap,
-	                                final Map<String, Boolean> fieldMap,
+	                                final Map<String, Field> fieldMap,
 	                                final String cellValueDelimiter,
 	                                final Writer writer,
 	                                final AtomicInteger outputRecordCounter) throws IOException {
-
-		final String recordId = getRecordIdOrDefault(csvInputRecord, csvInputHeaderMap);
 
 		final JsonGenerator jg = FACTORY.createGenerator(writer);
 
@@ -137,7 +135,7 @@ public final class CSV2SCLDJConverter {
 
 		csvInputHeaderMap.forEach((headerName, columnNumber) -> {
 
-			final boolean isMultivalue = fieldMap.get(headerName);
+			final boolean isMultivalue = fieldMap.get(headerName).isMultivalued();
 
 			final String inputValue = csvInputRecord.get(columnNumber);
 
@@ -154,7 +152,7 @@ public final class CSV2SCLDJConverter {
 
 			} catch (final IOException | CSV2SCLDJException e) {
 
-				throw CSV2LDJError.wrap(new CSV2SCLDJException(String.format("something went wrong at writing record '%s' in CSV to schema conform line-delimited JSON converting", recordId), e));
+				throw CSV2LDJError.wrap(new CSV2SCLDJException(String.format("something went wrong at writing record '%s' in CSV to schema conform line-delimited JSON converting", csvInputRecord.toString()), e));
 			}
 		});
 
@@ -279,18 +277,23 @@ public final class CSV2SCLDJConverter {
 		}
 	}
 
-	private static Map<String, Boolean> generateFieldMap(final Set<String> headers) {
+	private static Map<String, Field> generateFieldMap(final Set<String> headers,
+	                                                   final Map<String, Field> schema) {
 
-		final Map<String, Boolean> fieldMap = new HashMap<>();
+		final Map<String, Field> fieldMap = new HashMap<>();
 
 		headers.forEach(header -> {
 
 			try {
 
-				final Boolean fieldMultivalue = FincSolrSchema.getFieldByFieldName(header).isMultivalue();
-				final boolean isMultivalue = fieldMultivalue != null && fieldMultivalue;
+				if (!schema.containsKey(header)) {
 
-				fieldMap.put(header, isMultivalue);
+					throw new CSV2SCLDJException(String.format("header '%s' is not included in the schema, please define it schema first", header));
+				}
+
+				final Field field = schema.get(header);
+
+				fieldMap.put(header, field);
 			} catch (final CSV2SCLDJException e) {
 
 				throw CSV2LDJError.wrap(e);
@@ -298,24 +301,6 @@ public final class CSV2SCLDJConverter {
 		});
 
 		return fieldMap;
-	}
-
-	private static String getRecordIdOrDefault(final CSVRecord csvInputRecord,
-	                                           final Map<String, Integer> csvInputHeaderMap) {
-
-		final Integer recordIdColumnNumber = csvInputHeaderMap.get(FincSolrSchema.ID.getFieldName());
-
-		final String recordId;
-
-		if (recordIdColumnNumber != null) {
-
-			recordId = csvInputRecord.get(recordIdColumnNumber);
-		} else {
-
-			recordId = NO_ID_AVAILABLE_ATM;
-		}
-
-		return recordId;
 	}
 
 	/**

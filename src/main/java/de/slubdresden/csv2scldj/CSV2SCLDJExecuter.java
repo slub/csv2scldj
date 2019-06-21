@@ -1,12 +1,12 @@
 /**
  * Copyright © 2017 SLUB Dresden (<code@dswarm.org>)
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -34,6 +34,8 @@ import org.slf4j.LoggerFactory;
 
 import de.slubdresden.csv2scldj.constants.CSV2SCLDJParams;
 import de.slubdresden.csv2scldj.constants.Constants;
+import de.slubdresden.csv2scldj.model.Field;
+import de.slubdresden.csv2scldj.utils.SchemaUtils;
 
 /**
  * @author tgaengler
@@ -47,10 +49,11 @@ public final class CSV2SCLDJExecuter extends AbstractExecuter {
 	static {
 
 		HELP_SB.append("\n")
-				.append("this is a csv 2 schema conform line-delimited JSON converter").append("\n\n")
+				.append("this is a CSV 2 schema conform line-delimited JSON converter").append("\n\n")
 				.append("\t").append("this tool is intended for converting CSV records into schema conform line-delimited JSON records").append("\n\n")
 				.append("following parameters are available for configuration at the moment:").append("\n\n")
 				.append("\t").append(CSV2SCLDJParams.CSV_INPUT_FILE_NAME).append(" : the (absolute) file path to the input CSV file").append("\n")
+				.append("\t").append(CSV2SCLDJParams.SCHEMA_FILE_NAME).append(" : the (absolute) file path to the schema file (that should be used for schema conform parsing)").append("\n")
 				.append("\t").append(CSV2SCLDJParams.LDJ_OUTPUT_FILE_NAME).append(" : the (absolute) file path to the output line-delimited JSON file").append("\n")
 				.append("\t").append(CSV2SCLDJParams.CELL_VALUE_DELIMITER_PARAM).append(" : the value delimiter in CSV cells that include multiple values").append("\n")
 				.append("\t").append(CSV2SCLDJParams.HELP_PARAM).append(" : prints this help").append("\n\n")
@@ -63,10 +66,11 @@ public final class CSV2SCLDJExecuter extends AbstractExecuter {
 	}
 
 	public static void convertCSV2SCLDJ(final Reader reader,
+	                                    final Map<String, Field> schema,
 	                                    final BufferedWriter writer,
 	                                    final String cellValueDelimiter) throws IOException, CSV2SCLDJException {
 
-		CSV2SCLDJConverter.convert(reader, writer, cellValueDelimiter);
+		CSV2SCLDJConverter.convert(reader, schema, writer, cellValueDelimiter);
 	}
 
 	public static void main(final String[] args) {
@@ -99,8 +103,25 @@ public final class CSV2SCLDJExecuter extends AbstractExecuter {
 			final Map<String, String> argMap = checkOptionalParameters(optionalArgMap.orElse(new HashMap<>()));
 
 			final Optional<String> optionalCSVInputFileName = Optional.ofNullable(argMap.get(CSV2SCLDJParams.CSV_INPUT_FILE_NAME));
+			final Optional<String> optionalSchemaFileName = Optional.ofNullable(argMap.get(CSV2SCLDJParams.SCHEMA_FILE_NAME));
 			final Optional<String> optionalLDJOutputFileName = Optional.ofNullable(argMap.get(CSV2SCLDJParams.LDJ_OUTPUT_FILE_NAME));
 			final String cellValueDelimiter = argMap.get(CSV2SCLDJParams.CELL_VALUE_DELIMITER_PARAM);
+
+			final Map<String, Field> schema;
+
+			if (optionalSchemaFileName.isPresent()) {
+
+				schema = SchemaUtils.readSchema(optionalSchemaFileName.get());
+			} else {
+
+				LOG.error("Schema file is not defined. Please define a (valid) schema file name via the parameter '-schema-file-name' first");
+
+				printHelp();
+
+				System.exit(1);
+
+				return;
+			}
 
 			final BufferedReader reader;
 
@@ -140,12 +161,12 @@ public final class CSV2SCLDJExecuter extends AbstractExecuter {
 
 			LOG.info("cell value delimiter = '{}'", cellValueDelimiter);
 
-			convertCSV2SCLDJ(reader, writer, cellValueDelimiter);
+			convertCSV2SCLDJ(reader, schema, writer, cellValueDelimiter);
 		} catch (final Exception e) {
 
 			LOG.error("something went wrong at converting CSV 2 schema conform line-delimited JSON.", e);
 
-			System.out.println("\n" + HELP);
+			printHelp();
 
 			System.exit(1);
 		}

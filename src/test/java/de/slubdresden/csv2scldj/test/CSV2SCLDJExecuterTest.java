@@ -28,6 +28,7 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.junit.Assert;
@@ -40,7 +41,9 @@ import de.slubdresden.csv2scldj.CSV2SCLDJException;
 import de.slubdresden.csv2scldj.CSV2SCLDJExecuter;
 import de.slubdresden.csv2scldj.constants.CSV2SCLDJParams;
 import de.slubdresden.csv2scldj.constants.Constants;
+import de.slubdresden.csv2scldj.model.Field;
 import de.slubdresden.csv2scldj.util.TestUtil;
+import de.slubdresden.csv2scldj.utils.SchemaUtils;
 
 public class CSV2SCLDJExecuterTest {
 
@@ -77,11 +80,13 @@ public class CSV2SCLDJExecuterTest {
 		LOG.info("start CSV 2 schema conform line-delimited JSON test");
 
 		final Reader reader = TestUtil.getResourceAsReader("input_sample.csv");
+		final String schemaFilePath = TEST_RESOURCES_ROOT_PATH + File.separator + "finc_solr_schema.csv";
+		final Map<String, Field> schema = SchemaUtils.readSchema(schemaFilePath);
 		final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
 		final String cellValueDelimiter = "\\/\\(\\)";
 
-		CSV2SCLDJExecuter.convertCSV2SCLDJ(reader, writer, cellValueDelimiter);
+		CSV2SCLDJExecuter.convertCSV2SCLDJ(reader, schema, writer, cellValueDelimiter);
 
 		final String actualSCJResultString = outputStream.toString(Constants.UTF_8_ENCODING);
 		final String expectedSCLDJJResultString = TestUtil.getResourceAsString("output_sample.ldj");
@@ -97,17 +102,20 @@ public class CSV2SCLDJExecuterTest {
 		LOG.info("start CSV 2 schema conform line-delimited JSON commandline test");
 
 		final String inputFilePath = TEST_RESOURCES_ROOT_PATH + File.separator + "input_sample.csv";
+		final String schemaFilePath = TEST_RESOURCES_ROOT_PATH + File.separator + "finc_solr_schema.csv";
 		final String cellValueDelimiter = "\\/\\(\\)";
 		final String fileName = "output_sample.ldj";
 		final String actualResultFilePath = DEFAULT_RESULTS_FOLDER + File.separator + fileName;
 		final String expectedResultFilePath = TEST_RESOURCES_ROOT_PATH + File.separator + fileName;
 
 		final String csvInputFileNameParam = CSV2SCLDJParams.CSV_INPUT_FILE_NAME + Constants.EQUALS + inputFilePath;
+		final String schemaFileNameParam = CSV2SCLDJParams.SCHEMA_FILE_NAME + Constants.EQUALS + schemaFilePath;
 		final String scldjOutputFileNameParam = CSV2SCLDJParams.LDJ_OUTPUT_FILE_NAME + Constants.EQUALS + actualResultFilePath;
 		final String cellValueDelimiterParam = CSV2SCLDJParams.CELL_VALUE_DELIMITER_PARAM + Constants.EQUALS + cellValueDelimiter;
 
 		final String[] args = new String[]{
 				csvInputFileNameParam,
+				schemaFileNameParam,
 				scldjOutputFileNameParam,
 				cellValueDelimiterParam
 		};
