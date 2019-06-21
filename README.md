@@ -23,7 +23,7 @@ if you observe any problems with this tool or have questions about handling this
 
 in order to be able to use this tool, you first need to define a schema file
 
-## schema file definition
+### schema file definition
 
 the schema file is a CSV file that consists of columns, each row is a field definition
 
