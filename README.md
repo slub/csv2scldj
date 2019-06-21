@@ -21,7 +21,7 @@ if you observe any problems with this tool or have questions about handling this
 
 ## schema file
 
-in order to be able to use this tool, you first need to define a schema file
+in order to be able to use this tool, you first need to define a schema file, see, e.g., [finc_solr_schema.csv](src/test/resources/finc_solr_schema.csv)
 
 ### schema file definition
 
