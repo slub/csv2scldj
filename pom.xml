@@ -37,9 +37,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<version.maven-shade-plugin>3.2.1</version.maven-shade-plugin>
-		<version.maven-jar-plugin>3.1.1</version.maven-jar-plugin>
+		<version.maven-jar-plugin>3.1.2</version.maven-jar-plugin>
 		<version.maven.plugin.version>2.7</version.maven.plugin.version>
 		<version.maven.plugin.dependency>3.1.1</version.maven.plugin.dependency>
 		<version.maven.plugin.deploy>2.8.2</version.maven.plugin.deploy>
@@ -54,9 +54,9 @@
 		<version.slf4j.api>1.7.25</version.slf4j.api>
 		<version.logback>1.2.3</version.logback>
 		<junit.version>4.12</junit.version>
-		<version.commons-csv>1.6</version.commons-csv>
+		<version.commons-csv>1.7</version.commons-csv>
 		<version.vavr>0.9.2</version.vavr>
-		<jackson.version>2.9.8</jackson.version>
+		<jackson.version>2.9.9</jackson.version>
 		<version.jsonassert>1.5.0</version.jsonassert>
 		<google.guava.version>23.0</google.guava.version>
 	</properties>
