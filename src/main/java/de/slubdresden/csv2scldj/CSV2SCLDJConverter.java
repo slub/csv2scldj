@@ -169,7 +169,7 @@ public final class CSV2SCLDJConverter {
 	                                final String cellValueDelimiter,
 	                                final JsonGenerator jg) throws IOException {
 
-		if (!checkValue(inputCell)) {
+		if (valueNotExists(inputCell)) {
 
 			// write only valid values
 
@@ -182,7 +182,7 @@ public final class CSV2SCLDJConverter {
 
 		for (final String inputValue : inputValues) {
 
-			if (!checkValue(inputValue)) {
+			if (valueNotExists(inputValue)) {
 
 				// write only valid values
 
@@ -200,7 +200,7 @@ public final class CSV2SCLDJConverter {
 	                               final String cellValueDelimiter,
 	                               final JsonGenerator jg) throws IOException, CSV2SCLDJException {
 
-		if (!checkValue(inputValue)) {
+		if (valueNotExists(inputValue)) {
 
 			// write only valid values
 
@@ -318,13 +318,14 @@ public final class CSV2SCLDJConverter {
 		return recordId;
 	}
 
-	private static boolean checkValue(final String value) {
+	/**
+	 * returns true, if value does not exists, i.e., if its null or empty
+	 *
+	 * @param value value to check
+	 * @return true, if value does not exists, i.e., if its null or empty
+	 */
+	private static boolean valueNotExists(final String value) {
 
-		if (value == null || value.trim().isEmpty()) {
-
-			return false;
-		}
-
-		return true;
+		return value == null || value.trim().isEmpty();
 	}
 }

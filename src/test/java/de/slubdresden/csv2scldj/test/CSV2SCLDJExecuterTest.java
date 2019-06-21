@@ -78,7 +78,7 @@ public class CSV2SCLDJExecuterTest {
 
 		final Reader reader = TestUtil.getResourceAsReader("input_sample.csv");
 		final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, Constants.UTF_8_ENCODING));
+		final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
 		final String cellValueDelimiter = "\\/\\(\\)";
 
 		CSV2SCLDJExecuter.convertCSV2SCLDJ(reader, writer, cellValueDelimiter);
@@ -146,7 +146,7 @@ public class CSV2SCLDJExecuterTest {
 
 			if (actuaLine == null) {
 
-				Assert.assertTrue("actual schema conform line-delimited JSON is already empty, but shouldn't be empty.", false);
+				Assert.fail("actual schema conform line-delimited JSON is already empty, but shouldn't be empty.");
 			}
 
 			JSONAssert.assertEquals(expectedLine, actuaLine, true);
@@ -154,7 +154,7 @@ public class CSV2SCLDJExecuterTest {
 
 		if (actualSCLDJReader.readLine() != null) {
 
-			Assert.assertTrue("actual line-delimited JSON has more lines than the expected line-delimited JSON", false);
+			Assert.fail("actual line-delimited JSON has more lines than the expected line-delimited JSON");
 		}
 	}
 

@@ -117,7 +117,7 @@ public final class CSV2SCLDJExecuter extends AbstractExecuter {
 
 				LOG.info("try to read CSV input from stdin");
 
-				reader = new BufferedReader(new InputStreamReader(System.in, Constants.UTF_8_ENCODING));
+				reader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
 			}
 
 			final BufferedWriter writer;
@@ -135,7 +135,7 @@ public final class CSV2SCLDJExecuter extends AbstractExecuter {
 
 				LOG.info("try to write schema conform line-delimited JSON to stdout");
 
-				writer = new BufferedWriter(new OutputStreamWriter(System.out, Constants.UTF_8_ENCODING));
+				writer = new BufferedWriter(new OutputStreamWriter(System.out, StandardCharsets.UTF_8));
 			}
 
 			LOG.info("cell value delimiter = '{}'", cellValueDelimiter);

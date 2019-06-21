@@ -19,14 +19,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 import com.google.common.io.ByteSource;
 import com.google.common.io.Resources;
 
 import static com.google.common.base.Charsets.UTF_8;
-
-import de.slubdresden.csv2scldj.constants.Constants;
-
 
 public class TestUtil {
 
@@ -48,6 +46,6 @@ public class TestUtil {
 		final URL url = Resources.getResource(resource);
 		final ByteSource byteSource = Resources.asByteSource(url);
 
-		return new InputStreamReader(byteSource.openBufferedStream(), Constants.UTF_8_ENCODING);
+		return new InputStreamReader(byteSource.openBufferedStream(), StandardCharsets.UTF_8);
 	}
 }
