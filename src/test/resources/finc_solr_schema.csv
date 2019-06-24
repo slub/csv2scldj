@@ -140,7 +140,7 @@ publishPlace,true
 publisher,true
 publisherStr,true
 purchase,true
-record_id,false
+record_id,false,true
 recordtype
 rsn,true
 rvk_facet,true

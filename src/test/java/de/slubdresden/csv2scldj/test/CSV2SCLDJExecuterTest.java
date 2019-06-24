@@ -28,8 +28,6 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
-
 import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -81,7 +79,7 @@ public class CSV2SCLDJExecuterTest {
 
 		final Reader reader = TestUtil.getResourceAsReader("input_sample.csv");
 		final String schemaFilePath = TEST_RESOURCES_ROOT_PATH + File.separator + "finc_solr_schema.csv";
-		final Map<String, Field> schema = SchemaUtils.readSchema(schemaFilePath);
+		final io.vavr.collection.Map<String, Field> schema = SchemaUtils.readSchema(schemaFilePath);
 		final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
 		final String cellValueDelimiter = "\\/\\(\\)";
@@ -94,6 +92,32 @@ public class CSV2SCLDJExecuterTest {
 		compareSCLDJResult(expectedSCLDJJResultString, actualSCJResultString);
 
 		LOG.info("end CSV 2 schema conform line-delimited JSON test");
+	}
+
+	@Test
+	public void testCSV2SCLDJConverter2() throws IOException, CSV2SCLDJException {
+
+		LOG.info("start CSV 2 schema conform line-delimited JSON test 2");
+
+		final Reader reader = TestUtil.getResourceAsReader("input_sample_2.csv");
+		final String schemaFilePath = TEST_RESOURCES_ROOT_PATH + File.separator + "finc_solr_schema.csv";
+		final io.vavr.collection.Map<String, Field> schema = SchemaUtils.readSchema(schemaFilePath);
+		final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
+		final String cellValueDelimiter = "\\/\\(\\)";
+
+		try {
+
+			CSV2SCLDJExecuter.convertCSV2SCLDJ(reader, schema, writer, cellValueDelimiter);
+		} catch (IOException | CSV2SCLDJException e) {
+
+			e.printStackTrace();
+		} catch (final Exception e) {
+
+			Assert.assertTrue("this test should end up with an exception over here", true);
+		}
+
+		LOG.info("end CSV 2 schema conform line-delimited JSON test 2");
 	}
 
 	@Test

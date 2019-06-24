@@ -1,11 +1,27 @@
+/**
+ * Copyright © 2017 SLUB Dresden (<code@dswarm.org>)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package de.slubdresden.csv2scldj.utils;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
+import io.vavr.collection.Map;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.slf4j.Logger;
@@ -27,7 +43,7 @@ public final class SchemaUtils {
 
 	public static Map<String, Field> readSchema(final String schemaFileName) throws CSV2SCLDJException {
 
-		final Map<String, Field> schema = new LinkedHashMap<>();
+		final HashMap<String, Field> schema = new LinkedHashMap<>();
 
 		try {
 
@@ -102,7 +118,7 @@ public final class SchemaUtils {
 
 		LOG.info(String.format("successfully parsed schema from schema file at '%s'", schemaFileName));
 
-		return schema;
+		return io.vavr.collection.HashMap.ofAll(schema);
 	}
 
 	private static boolean parseBooleanValue(final String schemaFileName,
