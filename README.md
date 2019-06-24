@@ -30,7 +30,10 @@ the schema file is a CSV file that consists of rows and columns, each row is a f
 | column | column ID | Excel sheet ID | description | allowed values | required |
 |--------|-----------|----------------|-------------|----------------|----------|
 |1|0|A|the field name, i.e., the column name of a column in the input CSV file|string values without spaces inbetween|yes|
-|2|1|B|multivalued: indicates, whether the field is allowed to have multiple values or not (default (if value is not defined, i.e., cell is blank or empty) is 'false', i.e., multiple values are not allowed, i.e., singlevalued)|'true' or 'false'|no|
+|2|1|B|multivalued: indicates, whether the field is allowed to have multiple values or not (default* is 'false', i.e., multiple values are not allowed, i.e., singlevalued)|'true' or 'false'|no|
+|3|2|c|required: indicates, whether the field is required in a record or not (default* is 'false', i.e., the field is optional)|'true' or 'false'|no|
+
+*) if value is not defined, i.e., cell is blank or empty
 
 ## build
 
