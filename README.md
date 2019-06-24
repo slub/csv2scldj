@@ -41,12 +41,12 @@ the schema file is a CSV file that consists of rows and columns, each row is a f
 
 ## run
 
-    java -jar target/csv2scldj-0.0.2-SNAPSHOT-onejar.jar -csv-input-file-name=[FILE PATH TO YOUR CSV INPUT FILE] -ldj-output-file-name=[FILE PATH TO YOUR LINE-DELIMITED JSON OUTPUT FILE] -cell-value-delimiter=[THE CELL VALUE DELIMITER TO BE ABLE TO SPLIT UP MULTIPLE VALUES IN A CELL]
+    java -jar target/csv2scldj-0.0.2-SNAPSHOT-onejar.jar -csv-input-file-name=[FILE PATH TO YOUR CSV INPUT FILE] -schema-file-name=[FILE PATH TO YOUR SCHEMA FILE] -ldj-output-file-name=[FILE PATH TO YOUR LINE-DELIMITED JSON OUTPUT FILE] -cell-value-delimiter=[THE CELL VALUE DELIMITER TO BE ABLE TO SPLIT UP MULTIPLE VALUES IN A CELL]
 
 or
 
     cd bin 
-    ./csv2scldj -csv-input-file-name=[FILE PATH TO YOUR CSV INPUT FILE] -ldj-output-file-name=[FILE PATH TO YOUR LINE-DELIMITED JSON OUTPUT FILE] -cell-value-delimiter=[THE CELL VALUE DELIMITER TO BE ABLE TO SPLIT UP MULTIPLE VALUES IN A CELL]
+    ./csv2scldj -csv-input-file-name=[FILE PATH TO YOUR CSV INPUT FILE] -schema-file-name=[FILE PATH TO YOUR SCHEMA FILE] -ldj-output-file-name=[FILE PATH TO YOUR LINE-DELIMITED JSON OUTPUT FILE] -cell-value-delimiter=[THE CELL VALUE DELIMITER TO BE ABLE TO SPLIT UP MULTIPLE VALUES IN A CELL]
 
 You can set the logging root directory with help of parameter ```-logging-dir [INSERT YOUR LOGGING DIRECTORY HERE]``` at ```csv2scldj``` command (```-Dlogging_dir=[INSERT YOUR LOGGING DIRECTORY HERE]``` when calling the java library directly). The default logging root directory is the current path where the command is executed from.
 
