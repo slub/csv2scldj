@@ -21,6 +21,7 @@ package de.slubdresden.csv2scldj.constants;
 public final class CSV2SCLDJParams {
 
 	public static final String CSV_INPUT_FILE_NAME = "-csv-input-file-name";
+	public static final String SCHEMA_FILE_NAME = "-schema-file-name";
 	public static final String LDJ_OUTPUT_FILE_NAME = "-ldj-output-file-name";
 	public static final String CELL_VALUE_DELIMITER_PARAM = "-cell-value-delimiter";
 	public static final String HELP_PARAM = "-help";

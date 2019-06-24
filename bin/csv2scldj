@@ -22,4 +22,4 @@ do
 done
 echo "logging_dir = $logging_dir"
 echo "csv2scldj_args = $csv2scldj_args"
-java -jar -Dlogging_dir=$logging_dir ../target/csv2scldj-0.0.1-SNAPSHOT-onejar.jar $csv2scldj_args
+java -jar -Dlogging_dir=$logging_dir ../target/csv2scldj-0.0.2-SNAPSHOT-onejar.jar $csv2scldj_args
