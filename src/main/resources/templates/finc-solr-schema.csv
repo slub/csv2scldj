@@ -54,7 +54,7 @@ edition,false,false
 era,true,false
 era_facet,true,false
 facet_912a,false,false
-facet_avail,false,true
+facet_avail,true,true
 film_heading,true,false
 finc_class_facet,true,false
 fincclass_txtF_mv,true,false
