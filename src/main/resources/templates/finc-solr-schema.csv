@@ -1,4 +1,4 @@
-access_facet,false,true
+access_facet,false,false
 allfields,true,false
 allfields_unstemmed,true,false
 author,true,false
@@ -54,7 +54,7 @@ edition,false,false
 era,true,false
 era_facet,true,false
 facet_912a,false,false
-facet_avail,true,true
+facet_avail,true,false
 film_heading,true,false
 finc_class_facet,true,false
 fincclass_txtF_mv,true,false
@@ -63,8 +63,8 @@ first_indexed,false,false
 footnote,true,false
 format,true,false
 format_de105,true,false
-format_de14,true,true
-format_de15,true,true
+format_de14,true,false
+format_de15,true,false
 format_de520,true,false
 format_de540,true,false
 format_dech1,true,false
@@ -74,7 +74,7 @@ format_del152,true,false
 format_del189,true,false
 format_dezi4,true,false
 format_dezwi2,true,false
-format_finc,true,true
+format_finc,true,false
 format_nrw,true,false
 fullrecord,false,false
 fulltext,false,false
@@ -94,7 +94,7 @@ hierarchy_sequence,true,false
 hierarchy_top_id,true,false
 hierarchy_top_title,true,false
 hierarchytype,false,false
-id,false,true
+id,false,false
 illustrated,false,false
 imprint,false,false
 imprint_str_mv,true,false
@@ -115,7 +115,7 @@ long_lat_label,true,false
 marc_error,true,false
 marc024a_ct_mv,true,false
 marc028a_ct_mv,true,false
-mega_collection,true,true
+mega_collection,true,false
 misc_dech1,true,false
 multipart_link,true,false
 multipart_part,true,false
@@ -132,8 +132,8 @@ publisher,true,false
 publisherStr,true,false
 publishPlace,true,false
 purchase,true,false
-record_id,false,true
-recordtype,false,true
+record_id,false,false
+recordtype,false,false
 rsn,true,false
 rvk_cns_mv,true,false
 rvk_ct_mv,true,false
@@ -144,16 +144,16 @@ series,true,false
 series_orig,true,false
 series2,true,false
 signatur,true,false
-source_id,false,true
+source_id,false,false
 spelling,true,false
 spellingShingle,true,false
 swb_id_str,false,false
 thumbnail,false,false
 timecode,true,false
-title,false,true
+title,false,false
 title_alt,true,false
 title_auth,false,false
-title_full,false,true
+title_full,false,false
 title_full_unstemmed,false,false
 title_fullStr,false,false
 title_in_hierarchy,true,false
@@ -162,8 +162,8 @@ title_new,true,false
 title_old,true,false
 title_orig,false,false
 title_part_str,false,false
-title_short,false,true
-title_sort,false,true
+title_short,false,false
+title_sort,false,false
 title_sub,false,false
 title_uniform,false,false
 topic,true,false
