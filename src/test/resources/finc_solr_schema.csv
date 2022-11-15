@@ -1,4 +1,5 @@
 access_facet,false
+access_state_str,false
 allfields,true
 allfields_unstemmed,true
 author,true
@@ -115,6 +116,7 @@ itemdata
 language,true
 last_indexed
 lccn
+license_str_mv,true
 local_class_del242,true
 local_heading_del242,true
 local_heading_dezwi2,true
